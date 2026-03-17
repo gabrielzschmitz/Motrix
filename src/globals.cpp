@@ -14,8 +14,8 @@ const int GAME_H = 360;
 const int SCALE = 2;
 Font defaultFont;
 
-const int ACTIVE_W = 639;
-const int ACTIVE_H = 359;
-std::vector<Entity> gridEntities; // size ACTIVE_W * ACTIVE_H
-std::vector<bool> currentState;   // size ACTIVE_W * ACTIVE_H
-std::vector<bool> nextState;      // size ACTIVE_W * ACTIVE_H
+const int ACTIVE_W = GAME_W - 1;
+const int ACTIVE_H = GAME_H - 1;
+std::vector<Entity> gridEntities;  // size ACTIVE_W * ACTIVE_H
+std::vector<bool> currentState;    // size ACTIVE_W * ACTIVE_H
+std::vector<bool> nextState;       // size ACTIVE_W * ACTIVE_H
