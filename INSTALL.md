@@ -53,7 +53,7 @@ platforms including web builds.
 
 5. Run the game:
    ```bash
-   ./bin/Release/RECS
+   ./bin/Release/Motrix
    ```
 
 ---
@@ -73,7 +73,7 @@ platforms including web builds.
    ```
 3. Run the executable:
    ```cmd
-   bin\Release\RECS.exe
+   bin\Release\Motrix.exe
    ```
 
 > **Note:** Use modern MinGW-W64 from
@@ -118,7 +118,7 @@ platforms including web builds.
 
 4. Run the game:
    ```bash
-   ./bin/Release/RECS
+   ./bin/Release/Motrix
    ```
 
 #### Wayland Support
@@ -156,10 +156,10 @@ bear -- make config=release_x64 VERBOSE=1
    cd ..
    make config=release_x64
    ```
-
+/
 4. Run the game:
    ```bash
-   ./bin/Release/RECS
+   ./bin/Release/Motrix
    ```
 
 #### Alternative: Xcode
@@ -214,14 +214,14 @@ Then open the generated Xcode project.
 
 5. Run locally:
    ```bash
-   emrun bin/Release/RECS.html
+   emrun bin/Release/Motrix.html
    ```
 
 The web build will generate:
-- `RECS.html` - Main page
-- `RECS.js` - JavaScript runtime
-- `RECS.wasm` - WebAssembly binary
-- `RECS.data` - Packaged resources
+- `Motrix.html` - Main page
+- `Motrix.js` - JavaScript runtime
+- `Motrix.wasm` - WebAssembly binary
+- `Motrix.data` - Packaged resources
 
 You can host these files on any web server to deploy your game online.
 
@@ -373,7 +373,7 @@ make config=release_x64
 ## Project Structure
 
 ```
-RECS/
+Motrix/
 ├── build/               # Premake executables
 ├── build_files/         # Generated project files (created by Premake)
 ├── bin/                 # Compiled binaries
