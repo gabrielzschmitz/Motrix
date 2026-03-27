@@ -1,10 +1,10 @@
+// tests/tests.cpp
 // g++ -std=c++17 -O3 -DRUN_TESTS -march=native -o tests tests.cpp && ./tests
+#include "ecs/bench_ecs.h"
+#include "ecs/test_ecs.h"
+#include "sparse_set/bench_sparse.h"
+#include "sparse_set/test_sparse.h"
 #include "test_lib.h"
-
-#include "bench_ecs.h"
-#include "bench_sparse.h"
-#include "test_ecs.h"
-#include "test_sparse.h"
 
 #ifdef RUN_TESTS
 int main() {

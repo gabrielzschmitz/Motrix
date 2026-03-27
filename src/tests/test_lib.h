@@ -1,3 +1,4 @@
+// tests/test_lib.h
 #pragma once
 #include <chrono>
 #include <cmath>
@@ -21,25 +22,25 @@
 // TEST REGISTRY
 // =======================================================
 class TestRegistry {
-public:
+ public:
   struct Entry {
-    const char *name;
+    const char* name;
     std::function<void()> func;
   };
   std::vector<Entry> tests;
 
-  static TestRegistry &instance() {
+  static TestRegistry& instance() {
     static TestRegistry r;
     return r;
   }
 
-  void add(const char *name, std::function<void()> fn) {
+  void add(const char* name, std::function<void()> fn) {
     tests.push_back({name, fn});
   }
 
   void run_all() {
     std::cout << C_MAGENTA << C_BOLD << "Running Tests" << C_RESET << "\n";
-    for (auto &t : tests) {
+    for (auto& t : tests) {
       std::cout << C_BLUE << C_BOLD << "[TEST] " << C_RESET << t.name
                 << " ... ";
       t.func();
@@ -47,58 +48,57 @@ public:
     }
   }
 
-private:
+ private:
   TestRegistry() = default;
 };
 
 struct TestRegistrar {
-  TestRegistrar(const char *name, std::function<void()> fn) {
+  TestRegistrar(const char* name, std::function<void()> fn) {
     TestRegistry::instance().add(name, fn);
   }
 };
 
-#define TEST(name)                                                             \
-  static void name();                                                          \
-  static TestRegistrar _test_reg_##name(#name, name);                          \
+#define TEST(name)                                    \
+  static void name();                                 \
+  static TestRegistrar _test_reg_##name(#name, name); \
   static void name()
 
 // =======================================================
 // BENCHMARK REGISTRY
 // =======================================================
 class BenchRegistry {
-public:
+ public:
   struct Entry {
-    const char *name;
+    const char* name;
     std::function<void()> fn;
   };
   std::vector<Entry> benches;
 
-  static BenchRegistry &instance() {
+  static BenchRegistry& instance() {
     static BenchRegistry r;
     return r;
   }
 
-  void add(const char *name, std::function<void()> fn) {
+  void add(const char* name, std::function<void()> fn) {
     benches.push_back({name, fn});
   }
 
   // ----------------------------------------------
   // Benchmark execution with averaging + stddev
   // ----------------------------------------------
-  void run_all(int runs = 5,  // number of measurement runs
-               int warmup = 1 // warmup runs
+  void run_all(int runs = 5,   // number of measurement runs
+               int warmup = 1  // warmup runs
   ) {
     using clock = std::chrono::high_resolution_clock;
 
     std::cout << "\n" << C_MAGENTA << C_BOLD << "Running Benchmarks" << C_RESET;
 
-    for (auto &b : benches) {
+    for (auto& b : benches) {
       std::cout << C_CYAN << C_BOLD << "\n[BENCH] " << C_RESET << b.name
                 << "\n";
 
       // warmup ---------------------------------------------------------
-      for (int i = 0; i < warmup; i++)
-        b.fn();
+      for (int i = 0; i < warmup; i++) b.fn();
 
       std::vector<double> times;
       times.reserve(runs);
@@ -110,19 +110,17 @@ public:
         auto end = clock::now();
 
         double ms =
-            std::chrono::duration<double, std::milli>(end - start).count();
+          std::chrono::duration<double, std::milli>(end - start).count();
         times.push_back(ms);
       }
 
       // stats ----------------------------------------------------------
       double sum = 0;
-      for (double t : times)
-        sum += t;
+      for (double t : times) sum += t;
       double avg = sum / runs;
 
       double variance = 0;
-      for (double t : times)
-        variance += (t - avg) * (t - avg);
+      for (double t : times) variance += (t - avg) * (t - avg);
       variance /= runs;
       double stddev = std::sqrt(variance);
 
@@ -131,19 +129,18 @@ public:
       std::cout << "  std:  " << C_YELLOW << stddev << " ms" << C_RESET << "\n";
 
       std::cout << "  runs: ";
-      for (double t : times)
-        std::cout << C_BLUE << t << " " << C_RESET;
+      for (double t : times) std::cout << C_BLUE << t << " " << C_RESET;
     }
   }
 };
 
 struct BenchRegistrar {
-  BenchRegistrar(const char *name, std::function<void()> fn) {
+  BenchRegistrar(const char* name, std::function<void()> fn) {
     BenchRegistry::instance().add(name, fn);
   }
 };
 
-#define BENCH(name)                                                            \
-  static void name();                                                          \
-  static BenchRegistrar _bench_reg_##name(#name, name);                        \
+#define BENCH(name)                                     \
+  static void name();                                   \
+  static BenchRegistrar _bench_reg_##name(#name, name); \
   static void name()
