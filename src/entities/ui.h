@@ -30,7 +30,7 @@ inline void ResetConwayGrid(engine::ECS& ecs) {
 
       auto& cell = ecs.get<engine::components::CellComponent>(gridEntities[i]);
 
-      cell.color = alive ? WHITE : BLACK;
+      cell.color = alive ? WHITE : BLANK;
     }
   }
 }
@@ -289,11 +289,12 @@ inline void CreateUI(engine::ECS& ecs) {
   ecs.add<engine::components::UIResolvedRectComponent>(reset_button);
 
   ecs.add<engine::components::UIButtonComponent>(
-    reset_button,
-    engine::components::UIButtonComponent{"Reset Grid", false, [&ecs]() {
-                                            pattern_index = 0;
-                                            ResetConwayGrid(ecs);
-                                          }});
+    reset_button, engine::components::UIButtonComponent{
+                    "Reset Grid", false, [&ecs]() {
+                      pattern_index = 0;
+                      ResetConwayGrid(ecs);
+                      ClearBackground(Color{1, 127, 127, 255});
+                    }});
 
   ecs.add<engine::components::UITooltipComponent>(
     reset_button, "Generate a new random grid.");
