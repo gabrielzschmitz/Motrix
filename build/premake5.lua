@@ -120,9 +120,10 @@ end
 
 -- if you don't want to download raylib, then set this to false, and set the raylib dir to where you want raylib to be pulled from, must be full sources.
 downloadRaylib = true
-raylib_dir = "external/raylib-master"
+local ROOT = path.getabsolute(".")
+raylib_dir = path.join(ROOT, "external/raylib-master")
 
-workspaceName = "MyGame"
+workspaceName = "Motrix"
 baseName = path.getbasename(path.getdirectory(os.getcwd()))
 
 --if (baseName ~= 'raylib-quickstart') then
@@ -150,7 +151,7 @@ platforms({ "Web" })
 defaultplatform("Web")
 
 filter("configurations:Debug")
-defines({ "DEBUG", "DEBUG_MODE" })
+defines({ "DEBUG", "DEBUG_MODE", "LOG_LEVEL_DEBUG" })
 symbols("On")
 
 filter("configurations:Release")
@@ -200,7 +201,7 @@ linkoptions({
 	"-s GL_EMULATE_GLES_VERSION_STRING_FORMAT=1 ",
 	"--no-heap-copy",
 	"--preload-file ../../resources@/resources",
-	"--shell-file ../../src/index.html",
+	"--shell-file ../../src/app/index.html",
 	"-s FULL_ES2=1",
 	"-sGL_ENABLE_GET_PROC_ADDRESS",
 })
@@ -231,7 +232,7 @@ filter({})
 vpaths({
 	["Header Files/*"] = { "../include/**.h", "../include/**.hpp", "../src/**.h", "../src/**.hpp" },
 	["Source Files/*"] = { "../src/**.c", "src/**.cpp" },
-	["Windows Resource Files/*"] = { "../src/**.rc", "src/**.ico" },
+	["Windows Resource Files/*"] = { "../src/app/**.rc", "src/app/**.ico" },
 })
 
 files({ "../src/**.c", "../src/**.cpp", "../src/**.h", "../src/**.hpp", "../include/**.h", "../include/**.hpp" })
@@ -244,13 +245,12 @@ files({
 	raylib_dir .. "/src/rtextures.c",
 	raylib_dir .. "/src/rtext.c",
 	raylib_dir .. "/src/rmodels.c",
-	raylib_dir .. "/src/utils.c",
 	raylib_dir .. "/src/raudio.c",
 })
 defines({ "PLATFORM_WEB" })
 
 filter({ "system:windows", "action:vs*", "options:not with-emscripten" })
-files({ "../src/*.rc", "../src/*.ico" })
+files({ "../src/app/*.rc", "../src/app/*.ico" })
 
 filter({})
 
