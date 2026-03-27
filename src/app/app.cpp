@@ -45,7 +45,7 @@ static void RenderApp(m_app::AppState& state) {
 
   BeginMode2D(state.camera);
 
-  ClearBackground(Color{20, 22, 34, 255});
+  ClearBackground(Color{1, 127, 127, 255});
   m_eng::systems::RenderCells(state.ecs);
 
   EndMode2D();
@@ -53,7 +53,7 @@ static void RenderApp(m_app::AppState& state) {
   m_eng::systems::RenderUI(state.ecs);
 
   DrawTextEx(defaultFont, TextFormat("FPS: %d", GetFPS()), Vector2{10, 10},
-             defaultFont.baseSize * SCALE, 1, Color{255, 80, 150, 255});
+             defaultFont.baseSize * SCALE, 1, Color{246, 120, 232, 255});
 
   EndDrawing();
 }

@@ -5,6 +5,7 @@
 #include "../components/conway.h"
 #include "../ecs/ecs.h"
 #include "../globals.h"
+#include "raylib.h"
 
 namespace motrix::engine::systems {
 
@@ -49,7 +50,7 @@ inline void SimulateConway(ECS& ecs) {
 
     bool alive = nextState[i];
 
-    cell.color = alive ? WHITE : BLACK;
+    cell.color = alive ? WHITE : BLANK;
 
     if (alive) alive_cells++;
   }

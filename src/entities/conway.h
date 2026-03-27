@@ -28,10 +28,8 @@ namespace motrix::entities {
 inline const std::vector<Vector2> neighbor_offsets = {
   {-1, -1}, {0, -1}, {1, -1}, {-1, 0}, {1, 0}, {-1, 1}, {0, 1}, {1, 1}};
 
-// Helper: Check if a color is "alive" (white)
-inline bool is_alive(const Color& c) {
-  return c.r > 127 && c.g > 127 && c.b > 127;
-}
+// Helper: Check if a color is "alive"
+inline bool is_alive(const Color& c) { return c.a != 0; }
 
 // Helper to convert 2D coords to index
 inline int index(int x, int y) { return x + y * ACTIVE_W; }
@@ -56,7 +54,7 @@ inline void CreateConway(engine::ECS& ecs) {
       int i = x + y * ACTIVE_W;
       engine::Entity e = ecs.create_entity();
       bool alive = distProb(gen) < aliveProbability;
-      Color cellColor = alive ? WHITE : BLACK;
+      Color cellColor = alive ? WHITE : BLANK;
       ecs.add<engine::components::CellComponent>(
         e, Rectangle{(float)(x), (float)(y), 1.f, 1.f}, cellColor);
       gridEntities[i] = e;
