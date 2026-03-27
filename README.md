@@ -30,13 +30,6 @@ cd Motrix
 Follow the platform-specific build and run instructions in
 [INSTALL.md](INSTALL.md).
 
-### 3. Explore the example
-
-* **`src/engine`** — Core Motrix ECS components, systems, and utilities
-* **`src/entities`** — Sample game entities using Motrix (e.g., Conway’s Game of
-Life cells)
-* **`resources`** — Assets like sprites and icons used in the example
-
 ---
 
 ## Features
@@ -49,7 +42,7 @@ systems
   <img src="./resources/demo.gif" alt="Demo Screenshot" style="border-radius: 8px;">
 </p>
 <p align="center">
-  <em>Motrix simulates over 149,000 Conway’s Game of Life cells while maintaining 60+ FPS.</em>
+  <em>Motrix simulates over 500,000 Conway’s Game of Life cells while maintaining 240+ FPS.</em>
 </p>
 
 ---

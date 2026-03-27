@@ -156,7 +156,7 @@ bear -- make config=release_x64 VERBOSE=1
    cd ..
    make config=release_x64
    ```
-/
+
 4. Run the game:
    ```bash
    ./bin/Release/Motrix
