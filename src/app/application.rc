@@ -1,3 +1,4 @@
+// application.rc
 GLFW_ICON ICON "../resources/icon.ico"
 
 1 VERSIONINFO
@@ -8,11 +9,11 @@ BEGIN
   BEGIN
     BLOCK "040904E4"    // English US
     BEGIN
-      VALUE "FileDescription", "A raylib ECS engine by gabrielzschmitz"
+      VALUE "FileDescription", "A raylib based ECS library by gabrielzschmitz"
       VALUE "FileVersion", "1.0.0"
-      VALUE "InternalName", "game"
-      VALUE "LegalCopyright", "(c) 2025 gabrielzschmitz"
-      VALUE "ProductName", "Game"
+      VALUE "InternalName", "Motrix"
+      VALUE "LegalCopyright", "(c) 2026 gabrielzschmitz"
+      VALUE "ProductName", "Motrix"
       VALUE "ProductVersion", "1.0.0"
     END
   END
