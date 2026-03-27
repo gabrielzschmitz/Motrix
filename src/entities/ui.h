@@ -54,7 +54,7 @@ inline void ClearConwayGrid(engine::ECS& ecs) {
 
     auto& cell = ecs.get<engine::components::CellComponent>(gridEntities[i]);
 
-    cell.color = BLACK;
+    cell.color = BLANK;
   }
 }
 
