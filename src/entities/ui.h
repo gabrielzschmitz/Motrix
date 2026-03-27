@@ -18,6 +18,8 @@ inline void ResetConwayGrid(engine::ECS& ecs) {
   std::uniform_real_distribution<> distProb(0.0, 1.0);
 
   alive_cells = 0;
+  conway_speed = 20.f;
+  alive_probability_control = 0.35f;
   for (int x = 0; x < ACTIVE_W; ++x) {
     for (int y = 0; y < ACTIVE_H; ++y) {
       int i = x + y * ACTIVE_W;

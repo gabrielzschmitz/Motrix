@@ -29,8 +29,8 @@ inline std::vector<motrix::engine::Entity> gridEntities;
 inline std::vector<bool> currentState;
 inline std::vector<bool> nextState;
 
-inline float conway_speed = 8.f;
-inline float alive_probability_control = 0.65f;
+inline float conway_speed = 1.f;
+inline float alive_probability_control = 0.1f;
 inline bool paused = false;
 inline int pattern_index = 0;
 inline int alive_cells = 0;
