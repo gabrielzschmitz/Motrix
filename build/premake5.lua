@@ -120,8 +120,8 @@ end
 
 -- if you don't want to download raylib, then set this to false, and set the raylib dir to where you want raylib to be pulled from, must be full sources.
 downloadRaylib = true
-local ROOT = path.getabsolute(".")
-raylib_dir = path.join(ROOT, "external/raylib-master")
+local ROOT = path.getabsolute("..")
+raylib_dir = path.join(ROOT, "build/external/raylib-master")
 
 workspaceName = "Motrix"
 baseName = path.getbasename(path.getdirectory(os.getcwd()))
@@ -181,6 +181,10 @@ project(workspaceName)
 kind("ConsoleApp")
 location("build_files/")
 targetdir("../bin/%{cfg.buildcfg}")
+
+postbuildcommands({
+	'{COPY} "' .. ROOT .. '/resources/icon.png" "%{cfg.targetdir}/icon.png"',
+})
 
 -- Emscripten Web Build Configuration
 filter({ "options:with-emscripten" })
@@ -405,24 +409,21 @@ if not _OPTIONS["with-emscripten"] then
 
 	removefiles({ raylib_dir .. "/src/rcore_*.c" })
 
-	filter({ "system:macosx", "files:" .. raylib_dir .. "/src/rglfw.c" })
-	compileas("Objective-C")
+	filter({ "system:macosx" })
+	toolset("clang")
+	buildoptions({ "-x objective-c" })
+	links({
+		"OpenGL.framework",
+		"Cocoa.framework",
+		"IOKit.framework",
+		"CoreFoundation.framework",
+		"CoreAudio.framework",
+		"CoreVideo.framework",
+		"AudioToolbox.framework",
+	})
+
+	filter({ "system:windows", "action:gmake*" })
+	buildoptions({ "-Winvalid-pch" })
 
 	filter({})
 end
-
--- Linux / macOS
-filter({ "system:linux or system:macosx" })
-postbuildcommands({
-	"{COPY} ../../resources/icon.png %{cfg.targetdir}/icon.png",
-})
-
--- Windows
-filter({ "system:windows" })
-postbuildcommands({
-	('cmd /c copy /Y "%s\\resources\\icon.png" "%s\\bin\\Release\\icon.png"'):format(
-		os.getenv("GITHUB_WORKSPACE") or "..",
-		os.getenv("GITHUB_WORKSPACE") or ".."
-	),
-})
-filter({})
