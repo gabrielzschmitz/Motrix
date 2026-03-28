@@ -185,19 +185,40 @@ targetdir("../bin/%{cfg.buildcfg}")
 filter({ "system:windows", "action:gmake*", "options:not with-emscripten" })
 files({ "../src/app/*.rc", "../src/app/*.ico" })
 prebuildcommands({
-    'windres "' .. ROOT .. '/src/app/application.rc" -O coff -o "%{cfg.buildtarget.directory}/application_res.o"'
+	'windres "' .. ROOT .. '/src/app/application.rc" -O coff -o "%{cfg.buildtarget.directory}/application_res.o"',
 })
 linkoptions({
-    '%{cfg.buildtarget.directory}/application_res.o'
+	"%{cfg.buildtarget.directory}/application_res.o",
 })
 
 filter({ "system:windows", "action:vs*", "options:not with-emscripten" })
 files({ "../src/app/*.rc", "../src/app/*.ico" })
 
-
-filter({ "system:linux or system:macosx" })
+filter("system:linux")
+local binDir = path.getabsolute("../bin/%{cfg.buildcfg}")
 postbuildcommands({
-    'cp "' .. ROOT .. '/resources/icon.png" "%{cfg.targetdir}/icon.png"',
+	-- Copy the icon
+	'cp "'
+		.. ROOT
+		.. '/resources/icon.png" "'
+		.. binDir
+		.. '/icon.png"',
+
+	-- Generate desktop file line by line
+	'echo "[Desktop Entry]" > "'
+		.. binDir
+		.. '/Motrix.desktop"',
+	'echo "Name=Motrix" >> "' .. binDir .. '/Motrix.desktop"',
+	'echo "Exec=' .. binDir .. '/Motrix" >> "' .. binDir .. '/Motrix.desktop"',
+	'echo "Icon=' .. binDir .. '/icon.png" >> "' .. binDir .. '/Motrix.desktop"',
+	'echo "Type=Application" >> "' .. binDir .. '/Motrix.desktop"',
+	'echo "Categories=Graphics;" >> "' .. binDir .. '/Motrix.desktop"',
+	'chmod +x "' .. binDir .. '/Motrix.desktop"',
+})
+
+filter({ "system:macosx" })
+postbuildcommands({
+	'cp "' .. ROOT .. '/resources/icon.png" "%{cfg.targetdir}/icon.png"',
 })
 
 filter({})
