@@ -182,20 +182,22 @@ kind("ConsoleApp")
 location("build_files/")
 targetdir("../bin/%{cfg.buildcfg}")
 
--- Copy icon.png after build
-filter({ "system:windows", "action:gmake*" })
-postbuildcommands({
-	'cp "' .. ROOT .. '/resources/icon.png" "%{cfg.targetdir}/icon.png"',
+filter({ "system:windows", "action:gmake*", "options:not with-emscripten" })
+files({ "../src/app/*.rc", "../src/app/*.ico" })
+prebuildcommands({
+    'windres "' .. ROOT .. '/src/app/application.rc" -O coff -o "%{cfg.buildtarget.directory}/application_res.o"'
+})
+linkoptions({
+    '%{cfg.buildtarget.directory}/application_res.o'
 })
 
-filter({ "system:windows", "action:vs*" })
-postbuildcommands({
-	'cmd /c copy /Y "' .. ROOT .. '\\resources\\icon.png" "%{cfg.targetdir}\\icon.png"',
-})
+filter({ "system:windows", "action:vs*", "options:not with-emscripten" })
+files({ "../src/app/*.rc", "../src/app/*.ico" })
+
 
 filter({ "system:linux or system:macosx" })
 postbuildcommands({
-	'cp "' .. ROOT .. '/resources/icon.png" "%{cfg.targetdir}/icon.png"',
+    'cp "' .. ROOT .. '/resources/icon.png" "%{cfg.targetdir}/icon.png"',
 })
 
 filter({})
